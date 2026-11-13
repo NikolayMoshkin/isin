@@ -12,7 +12,7 @@
  *   Доступ: все (или «все, у кого есть ссылка»)
  */
 
-var SHEET_NAME = 'Облигации';
+var SHEET_NAME = 'Income';
 var COL = {
   ISIN: 2,       // B
   RATING: 3,     // C
@@ -119,8 +119,13 @@ function updateByIsin_(item) {
     updated.fields.push('couponsPerYear');
   }
   if (Object.prototype.hasOwnProperty.call(item, 'comment')) {
-    sheet.getRange(row, COL.COMMENT).setValue(item.comment);
-    updated.fields.push('comment');
+    var existing = String(sheet.getRange(row, COL.COMMENT).getValue() || '').trim();
+    if (!existing) {
+      sheet.getRange(row, COL.COMMENT).setValue(item.comment);
+      updated.fields.push('comment');
+    } else {
+      updated.fields.push('comment_skipped');
+    }
   }
 
   if (updated.fields.length === 0) {
