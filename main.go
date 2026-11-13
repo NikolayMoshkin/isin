@@ -98,9 +98,12 @@ func run() error {
 	if maturity := bond.GetMaturityDate(); maturity != nil {
 		fmt.Println("Дата погашения:", maturity.AsTime().Format("2006-01-02"))
 	}
+	// RiskLevel_RISK_LEVEL_UNSPECIFIED RiskLevel = 0 //Не указан.
+	// RiskLevel_RISK_LEVEL_LOW         RiskLevel = 1 //Низкий уровень риска.
+	// RiskLevel_RISK_LEVEL_MODERATE    RiskLevel = 2 //Средний уровень риска.
+	// RiskLevel_RISK_LEVEL_HIGH        RiskLevel = 3 //Высокий уровень риска.
 	fmt.Println("Уровень риска Т-Банка (не кредитный рейтинг):", bond.GetRiskLevel())
 	// fmt.Println("Уровень риска клиента:", bond.GetDlong())
-	fmt.Println("Кредитный рейтинг агентства: не получен; нужен отдельный источник")
 	fmt.Println("---")
 	if !found {
 		return fmt.Errorf("облигация с ISIN %s не найдена в Invest API", isin)
